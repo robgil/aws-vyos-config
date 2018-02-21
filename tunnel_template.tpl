@@ -17,8 +17,8 @@ set vpn ipsec site-to-site peer {{ tun.remote_ip }} vti bind '{{ tun.vti }}'
 set vpn ipsec site-to-site peer {{ tun.remote_ip }} vti esp-group 'AWS'
 
 # Configure BGP neighbors
-set protocols bgp 65000 neighbor {{ tun.remote_neighbor_ip }} remote-as '{{ tun.remote_asn }}'
-set protocols bgp 65000 neighbor {{ tun.remote_neighbor_ip }} soft-reconfiguration 'inbound'
-set protocols bgp 65000 neighbor {{ tun.remote_neighbor_ip }} timers holdtime '{{ tun.hold_time }}'
-set protocols bgp 65000 neighbor {{ tun.remote_neighbor_ip }} timers keepalive '10'
+set protocols bgp {{ tun.local_asn }} neighbor {{ tun.remote_neighbor_ip }} remote-as '{{ tun.remote_asn }}'
+set protocols bgp {{ tun.local_asn }} neighbor {{ tun.remote_neighbor_ip }} soft-reconfiguration 'inbound'
+set protocols bgp {{ tun.local_asn }} neighbor {{ tun.remote_neighbor_ip }} timers holdtime '{{ tun.hold_time }}'
+set protocols bgp {{ tun.local_asn }} neighbor {{ tun.remote_neighbor_ip }} timers keepalive '10'
 

@@ -68,6 +68,7 @@ try:
         'remote_neighbor_ip': tun1.vpn_gateway.tunnel_inside_address.ip_address.cdata + '/' + \
                 tun1.vpn_gateway.tunnel_inside_address.network_cidr.cdata,
         'remote_asn': tun1.vpn_gateway.bgp.asn.cdata,
+        'local_asn': tun1.customer_gateway.bgp.asn.cdata,
         'hold_time': tun1.vpn_gateway.bgp.hold_time.cdata,
         }
     tun2 = {
@@ -83,6 +84,7 @@ try:
         'remote_neighbor_ip': tun2.vpn_gateway.tunnel_inside_address.ip_address.cdata + '/' + \
                 tun2.vpn_gateway.tunnel_inside_address.network_cidr.cdata,
         'remote_asn': tun2.vpn_gateway.bgp.asn.cdata,
+        'local_asn': tun2.customer_gateway.bgp.asn.cdata,
         'hold_time': tun2.vpn_gateway.bgp.hold_time.cdata,
         }
 
