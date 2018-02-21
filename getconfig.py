@@ -22,11 +22,12 @@ parser.add_argument("--id",
                     action="store",
                     default=[])
 parser.add_argument("--vti",
-                    help="Virtual Tunnel Interface",
+                    help="Virtual Tunnel Interface (list separated by space)",
                     dest="vti",
                     required=True,
-                    action="store",
-                    default=[])
+                    nargs='+',
+                    type=str
+                    ) 
 parser.add_argument("--localip",
                     help="Local IP used for the tunnel. Use the RFC1918 address if doing NAT Traversal",
                     dest="localip",
@@ -57,7 +58,7 @@ try:
 
     tun1 = {
         'vpnid': vpnid,
-        'vti': args.vti,
+        'vti': args.vti[0],
         'local_ip': args.localip,
         'mtu': 1436,
         'psk': tun1.ike.pre_shared_key.cdata,
@@ -73,7 +74,7 @@ try:
         }
     tun2 = {
         'vpnid': vpnid,
-        'vti': args.vti,
+        'vti': args.vti[1],
         'local_ip': args.localip,
         'mtu': 1436,
         'psk': tun2.ike.pre_shared_key.cdata,
