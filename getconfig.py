@@ -15,6 +15,12 @@ parser.add_argument("-p",
                     required=True,
                     action="store",
                     default=[])
+parser.add_argument("--region",
+                    help="AWS Region. Defaults to profile region.",
+                    dest="region",
+                    required=True,
+                    action="store",
+                    default=[])
 parser.add_argument("--id",
                     help="VPN ID",
                     dest="vpnid",
@@ -45,7 +51,7 @@ args = parser.parse_args()
 
 
 try:
-    session = boto3.Session(profile_name=args.profile)
+    session = boto3.Session(profile_name=args.profile, region_name=args.region)
     ec2 = session.client('ec2')
     vpns = ec2.describe_vpn_connections(VpnConnectionIds=[args.vpnid])
     config_xml = vpns['VpnConnections'][0]['CustomerGatewayConfiguration']
@@ -66,8 +72,7 @@ try:
         'local_public_ip': tun1.customer_gateway.tunnel_outside_address.ip_address.cdata,
         'local_neighbor_ip': tun1.customer_gateway.tunnel_inside_address.ip_address.cdata + '/' + \
                 tun1.customer_gateway.tunnel_inside_address.network_cidr.cdata,
-        'remote_neighbor_ip': tun1.vpn_gateway.tunnel_inside_address.ip_address.cdata + '/' + \
-                tun1.vpn_gateway.tunnel_inside_address.network_cidr.cdata,
+        'remote_neighbor_ip': tun1.vpn_gateway.tunnel_inside_address.ip_address.cdata,
         'remote_asn': tun1.vpn_gateway.bgp.asn.cdata,
         'local_asn': tun1.customer_gateway.bgp.asn.cdata,
         'hold_time': tun1.vpn_gateway.bgp.hold_time.cdata,
@@ -82,8 +87,7 @@ try:
         'local_public_ip': tun2.customer_gateway.tunnel_outside_address.ip_address.cdata,
         'local_neighbor_ip': tun2.customer_gateway.tunnel_inside_address.ip_address.cdata + '/' + \
                 tun2.customer_gateway.tunnel_inside_address.network_cidr.cdata,
-        'remote_neighbor_ip': tun2.vpn_gateway.tunnel_inside_address.ip_address.cdata + '/' + \
-                tun2.vpn_gateway.tunnel_inside_address.network_cidr.cdata,
+        'remote_neighbor_ip': tun2.vpn_gateway.tunnel_inside_address.ip_address.cdata,
         'remote_asn': tun2.vpn_gateway.bgp.asn.cdata,
         'local_asn': tun2.customer_gateway.bgp.asn.cdata,
         'hold_time': tun2.vpn_gateway.bgp.hold_time.cdata,
