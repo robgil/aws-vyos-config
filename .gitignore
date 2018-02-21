@@ -1,0 +1,14 @@
+pip-selfcheck.json
+lib/
+bin/
+include/
+*.log
+.Python
+__pycache__/
+*.pyc
+config.yml
+crop.json
+man/
+src/
+.idea/
+*.csv
